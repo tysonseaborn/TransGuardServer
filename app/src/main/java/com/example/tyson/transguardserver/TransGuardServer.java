@@ -1,9 +1,12 @@
 package com.example.tyson.transguardserver;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,6 +20,7 @@ import java.net.URL;
 
 public class TransGuardServer extends Activity {
 
+    String apiKey = "AIzaSyBWfKLPBvX8P4tm2sI4bKiT4LA2XUyejp4";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,11 +88,22 @@ public class TransGuardServer extends Activity {
         }
     }
 
+    public void onButtonClick(View view) {
+
+        switch(view.getId()) {
+            case R.id.postButton:
+                Content content = createContent();
+
+                this.post(apiKey, content);
+                break;
+        }
+    }
+
     public static Content createContent(){
 
         Content c = new Content();
 
-        c.addRegId("APA91bFqnQzp0z5IpXWdth1lagGQZw1PTbdBAD13c-UQ0T76BBYVsFrY96MA4SFduBW9RzDguLaad-7l4QWluQcP6zSoX1HSUaAzQYSmI93....");
+        c.addRegId("AIzaSyAGvHm7oFwBqka9p6kJjoZrvsd4qjIg8as");
         c.createData("Test Title", "Test Message");
 
         return c;
