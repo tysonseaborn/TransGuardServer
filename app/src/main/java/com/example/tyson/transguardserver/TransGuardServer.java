@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -24,12 +25,16 @@ public class TransGuardServer extends Activity {
 
     String apiKey = "AIzaSyBWfKLPBvX8P4tm2sI4bKiT4LA2XUyejp4";
     //String apiKey = "AIzaSyAnQRrzN8JVNqCSG6NKNJPLcLEPCSqLdyw";
-    String regid;
+    String clientRegID;
+    String regID;
+    String PROJECT_NUMBER = "492813484993";;
+    GoogleCloudMessaging gcm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trans_guard_server);
+        getRegId();
     }
 
     public static void post(final String apiKey, final Content content) {
@@ -106,15 +111,11 @@ public class TransGuardServer extends Activity {
             case R.id.postButton:
                 Content content = createContent();
                 Bundle extras = getIntent().getExtras();
-                regid = extras.getString("regid");
-                
+                clientRegID = extras.getString("regid");
+
                 this.post(apiKey, content);
                 break;
         }
-    }
-
-    public void setRegid(String id) {
-        this.regid = id;
     }
 
     public static Content createContent(){
@@ -144,5 +145,33 @@ public class TransGuardServer extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void getRegId(){
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg = "";
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
+                    }
+                    regID = gcm.register(PROJECT_NUMBER);
+                    msg = "Device registered, registration ID=" + regID;
+                    Log.i("GCM", msg);
+
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+
+                }
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                //etRegId.setText(msg + "\n");
+                Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG);
+            }
+        }.execute(null, null, null);
     }
 }
