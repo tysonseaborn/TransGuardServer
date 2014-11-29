@@ -34,6 +34,13 @@ public class GcmMessageHandler extends IntentService {
         mes = extras.getString("title");
         showToast();
         Log.i("GCM", "Received : (" +messageType+")  "+extras.getString("title"));
+        Toast.makeText(getBaseContext(), "Received : " + extras.getString("regid"), Toast.LENGTH_LONG);
+
+        Intent i = new Intent(getBaseContext(), TransGuardServer.class);
+        i.putExtra("regid", extras.getString("regid"));
+        startActivity(i);
+
+
 
         GcmBroadcastReceiver.completeWakefulIntent(intent);
 

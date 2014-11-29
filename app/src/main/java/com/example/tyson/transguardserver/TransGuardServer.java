@@ -24,6 +24,7 @@ public class TransGuardServer extends Activity {
 
     String apiKey = "AIzaSyBWfKLPBvX8P4tm2sI4bKiT4LA2XUyejp4";
     //String apiKey = "AIzaSyAnQRrzN8JVNqCSG6NKNJPLcLEPCSqLdyw";
+    String regid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,10 +105,16 @@ public class TransGuardServer extends Activity {
         switch(view.getId()) {
             case R.id.postButton:
                 Content content = createContent();
-
+                Bundle extras = getIntent().getExtras();
+                regid = extras.getString("regid");
+                
                 this.post(apiKey, content);
                 break;
         }
+    }
+
+    public void setRegid(String id) {
+        this.regid = id;
     }
 
     public static Content createContent(){
