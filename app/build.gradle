@@ -37,3 +37,11 @@ android {
         exclude 'META-INF/NOTICE'
     }
 }
+
+dependencies {
+    compile "com.google.android.gms:play-services:3.1.+"
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:21.0.2'
+}

@@ -114,7 +114,7 @@ public class TransGuardServer extends Activity {
 
         Content c = new Content();
 
-        c.addRegId("APA91bHMVIagj8qpkZV8Ecih1umdXZMBMGEkEXi6imWjcrdz7-2kEF2_GJxx77Qi_XnRbcSy9ntQVnldVH41D_hvHCFnXehDewUMqV4YlS-byJKS58Kln3V61apgMioz3cG9bX4Wctmcxb626JZkNGDOR8Qj2oleTwHYy35HdcTBwKQ_ctW5HCQ");
+        c.addRegId("APA91bE9LkMdQ89rB4GKwcixtuHgB0gIDWecEKhvuzdx6N0jAGsoWiEgQZlazR5rAJqdIGPD8yCWGNIU0M64fxH5EvudqPkvKexdACpnmBC2ZTblj44W4Ppp9nq6Mi0QCX5Umyrqx-KP2JptmKTaAv2LzyeSzauofVVLb0UUY-4MeHiLVFSn-RU");
         c.createData("Test Title", "Test Message");
 
         return c;
