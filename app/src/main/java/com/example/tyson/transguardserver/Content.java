@@ -1,5 +1,6 @@
 package com.example.tyson.transguardserver;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 
 import java.io.InputStream;
@@ -11,8 +12,6 @@ import java.util.Map;
 
 public class Content implements Serializable {
 
-
-
     private List<String> registration_ids;
     private Map<String,String> data;
 
@@ -23,6 +22,7 @@ public class Content implements Serializable {
     AssetManager am;
     InputStream is;
     int xmlCounter = 1;
+    Context context;
 
 
     public void addRegId(String regId){
@@ -31,11 +31,12 @@ public class Content implements Serializable {
         registration_ids.add(regId);
     }
 
-    public void createData(){
+    public void createData(Context context){
         if(data == null)
             data = new HashMap<String,String>();
 
         try {
+            am = context.getAssets();
             is = am.open("xmlTestFile.xml");
             //is = new FileInputStream("C:/Users/Tyson/Desktop/xmlTestFile.xml");
             entries = xmlParser.parse(is);

@@ -31,14 +31,20 @@ public class GcmMessageHandler extends IntentService {
         // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
 
-        mes = extras.getString("title");
+        //mes = extras.getString("title");
         showToast();
-        Log.i("GCM", "Received : (" +messageType+")  " + extras.getString("title"));
-        Toast.makeText(getBaseContext(), "Received : " + extras.getString("regId"), Toast.LENGTH_LONG).show();
+        //Log.i("GCM", "Received : (" +messageType+")  " + extras.getString("title"));
 
-        Intent i = new Intent(getBaseContext(), TransGuardServer.class);
-        i.putExtra("regId", extras.getString("regId"));
-        startActivity(i);
+        if(extras.getString("regId") != null) {
+            Toast.makeText(getBaseContext(), "Received : " + extras.getString("regId"), Toast.LENGTH_LONG).show();
+            TransGuardServer.clientRegID = extras.getString("regId");
+        } else if(extras.getString("lat") != null && extras.getString("lon") != null) {
+            Log.i("GCM", "Received : (" + messageType +")  " + extras.getString("lat") + " " + extras.getString("lon"));
+        }
+
+//        Intent i = new Intent(getBaseContext(), TransGuardServer.class);
+//        i.putExtra("regId", extras.getString("regId"));
+//        startActivity(i);
 
 
 

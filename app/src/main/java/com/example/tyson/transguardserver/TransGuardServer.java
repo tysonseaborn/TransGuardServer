@@ -1,6 +1,7 @@
 package com.example.tyson.transguardserver;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,10 +26,11 @@ public class TransGuardServer extends Activity {
 
     String apiKey = "AIzaSyBWfKLPBvX8P4tm2sI4bKiT4LA2XUyejp4";
     //String apiKey = "AIzaSyAnQRrzN8JVNqCSG6NKNJPLcLEPCSqLdyw";
-    String clientRegID;
+    public static String clientRegID;
     String regID;
     String PROJECT_NUMBER = "492813484993";;
     GoogleCloudMessaging gcm;
+    static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,21 +111,21 @@ public class TransGuardServer extends Activity {
 
         switch(view.getId()) {
             case R.id.postButton:
+                //Bundle extras = getIntent().getExtras();
+                //clientRegID = extras.getString("regid");
                 Content content = createContent();
-                Bundle extras = getIntent().getExtras();
-                clientRegID = extras.getString("regid");
 
                 this.post(apiKey, content);
                 break;
         }
     }
 
-    public static Content createContent(){
+    public Content createContent(){
 
         Content c = new Content();
 
-        c.addRegId("APA91bE7pkJ82PfXhhGWG8zWl5Cl9g0nhLwGmZL0sqJED-SaXYWLmnldbPaUZ90BPEZdquVOknPxvkh5DWkCOfGySCp-hlURrOWst5icMlgnHd-kwWeWlvMd1vnvIddnyX8Q-wKf-Mqub6u_d-BXUyOVr3luIkSZDkwZKdROHGiNwfu57xTwuiM");
-        c.createData();
+        c.addRegId(clientRegID);
+        c.createData(this.getBaseContext());
 
         return c;
     }
