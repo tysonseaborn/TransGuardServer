@@ -5,6 +5,9 @@ import android.content.res.AssetManager;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,12 +47,34 @@ public class Content implements Serializable {
             e.printStackTrace();
         }
 
+        // Format date and amount strings before server sends them to application
+        Date newDate;
+        String newDateStr = null;
+        int newAmount;
+        String stringAmount;
+
         for (XMLParser.Entry entry : entries) {
-            if(entry.date != null) {
-                data.put("date" + String.valueOf(xmlCounter), entry.date);
-            }
+
             data.put("name" + String.valueOf(xmlCounter), entry.name);
-            data.put("amount" + String.valueOf(xmlCounter), entry.amount);
+
+            if(entry.date != null) {
+                try {
+                    newDate = new SimpleDateFormat("0yyyyMMdd").parse(entry.date);
+                    SimpleDateFormat postFormater = new SimpleDateFormat("EEEE, MMMM dd, yyyy");
+                    newDateStr = postFormater.format(newDate);
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                data.put("date" + String.valueOf(xmlCounter), newDateStr);
+            }
+
+
+            newAmount = Integer.parseInt(entry.amount);
+            stringAmount = '$' + String.valueOf(newAmount);
+
+            data.put("amount" + String.valueOf(xmlCounter), stringAmount);
 
             xmlCounter++;
         }
