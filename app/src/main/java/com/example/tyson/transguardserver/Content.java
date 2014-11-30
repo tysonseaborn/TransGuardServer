@@ -1,5 +1,8 @@
 package com.example.tyson.transguardserver;
 
+import android.content.res.AssetManager;
+
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -13,6 +16,14 @@ public class Content implements Serializable {
     private List<String> registration_ids;
     private Map<String,String> data;
 
+    // Instantiate the parser
+    XMLParser xmlParser = new XMLParser();
+    //InputStream inputStream = null;
+    List<XMLParser.Entry> entries = null;
+    AssetManager am;
+    InputStream is;
+    int xmlCounter = 1;
+
 
     public void addRegId(String regId){
         if(registration_ids == null)
@@ -20,12 +31,30 @@ public class Content implements Serializable {
         registration_ids.add(regId);
     }
 
-    public void createData(String title, String message){
+    public void createData(){
         if(data == null)
             data = new HashMap<String,String>();
 
-        data.put("title", title);
-        data.put("message", message);
+        try {
+            is = am.open("xmlTestFile.xml");
+            //is = new FileInputStream("C:/Users/Tyson/Desktop/xmlTestFile.xml");
+            entries = xmlParser.parse(is);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        for (XMLParser.Entry entry : entries) {
+            if(entry.date != null) {
+                data.put("date" + String.valueOf(xmlCounter), entry.date);
+            }
+            data.put("name" + String.valueOf(xmlCounter), entry.name);
+            data.put("amount" + String.valueOf(xmlCounter), entry.amount);
+
+            xmlCounter++;
+        }
+
+        //data.put("title", title);
+        //data.put("message", message);
     }
 
 
