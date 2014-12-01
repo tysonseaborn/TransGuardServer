@@ -8,12 +8,66 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".TransGuardServer">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="BOOP"
-        android:id="@+id/postButton"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="onButtonClick" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Reg ID:"
+                android:id="@+id/textViewRegLabel"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/textViewRegValue"
+                android:layout_marginLeft="5dp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Location:"
+                android:id="@+id/textViewLocationLabel"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/textViewLocationValue"
+                android:layout_marginLeft="5dp"
+                android:textStyle="italic" />
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:text="Send"
+            android:id="@+id/postButton"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="onButtonClick"
+            android:textSize="30dp" />
+
+    </LinearLayout>
+
 </RelativeLayout>

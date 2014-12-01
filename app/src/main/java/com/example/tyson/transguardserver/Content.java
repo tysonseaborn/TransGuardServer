@@ -33,9 +33,9 @@ public class Content implements Serializable {
         registration_ids.add(regId);
     }
 
-    public void createData(Context context){
-        if(data == null)
-            data = new HashMap<String,String>();
+    public void createData(Context context) {
+        if (data == null)
+            data = new HashMap<String, String>();
 
         try {
             am = context.getAssets();
@@ -55,7 +55,7 @@ public class Content implements Serializable {
 
             data.put("name" + String.valueOf(xmlCounter), entry.name);
 
-            if(entry.date != null) {
+            if (entry.date != null) {
                 try {
                     newDate = new SimpleDateFormat("0yyyyMMdd").parse(entry.date);
                     SimpleDateFormat postFormater = new SimpleDateFormat("EEEE, MMMM dd, yyyy");
@@ -77,6 +77,23 @@ public class Content implements Serializable {
 
             xmlCounter++;
         }
-
     }
+
+    public List<String> getRegistration_ids() {
+        return registration_ids;
+    }
+
+        public void setRegistration_ids(List<String> registration_ids) {
+        this.registration_ids = registration_ids;
+    }
+
+        public Map<String, String> getData() {
+        return data;
+    }
+
+    public void setData(Map<String, String> data) {
+        this.data = data;
+    }
+
+
 }

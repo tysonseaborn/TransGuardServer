@@ -30,22 +30,19 @@ public class GcmMessageHandler extends IntentService {
         // The getMessageType() intent parameter must be the intent you received
         // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
+        Intent i = new Intent("trans");
 
         if(extras.getString("regId") != null) {
-            Toast.makeText(getBaseContext(), "Received : " + extras.getString("regId"), Toast.LENGTH_LONG).show();
             TransGuardServer.clientRegID = extras.getString("regId");
-            Intent i = new Intent("trans");
             i.putExtra("method", "updateRegID");
-            LocalBroadcastManager.getInstance(this).sendBroadcast(i);
         } else if(extras.getString("lat") != null && extras.getString("lon") != null) {
             Log.i("GCM", "Received : (" + messageType +")  " + extras.getString("lat") + " " + extras.getString("lon"));
-            Toast.makeText(getBaseContext(), "Received location: " + extras.getString("lat") + " " + extras.getString("lon"), Toast.LENGTH_LONG).show();
             TransGuardServer.lat = extras.getString("lat");
             TransGuardServer.lon = extras.getString("lon");
-            Intent i = new Intent("loc");
             i.putExtra("method", "updateLocation");
-            LocalBroadcastManager.getInstance(this).sendBroadcast(i);
         }
+
+        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
 
         GcmBroadcastReceiver.completeWakefulIntent(intent);
     }

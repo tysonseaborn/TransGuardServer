@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,6 +40,8 @@ public class TransGuardServer extends Activity {
     //display values
     public static String lat;
     public static String lon;
+    public TextView tv1;
+    public TextView tv2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,9 +203,14 @@ public class TransGuardServer extends Activity {
             // Extract data included in the Intent
 
             if (intent.getStringExtra("method").equals("updateRegID")) {
-
+                Toast.makeText(getBaseContext(), "Registration ID received!", Toast.LENGTH_LONG).show();
+                tv1 = (TextView)findViewById(R.id.textViewRegValue);
+                tv1.setText(clientRegID);
             }
             else if (intent.getStringExtra("method").equals("updateLocation")) {
+                Toast.makeText(getBaseContext(), "Location received!!", Toast.LENGTH_LONG).show();
+                tv2 = (TextView)findViewById(R.id.textViewLocationValue);
+                tv2.setText(lat + ' ' + lon);
 
             }
         }
