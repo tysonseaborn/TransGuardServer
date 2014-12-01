@@ -1,10 +1,15 @@
 package com.example.tyson.transguardserver;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +35,10 @@ public class TransGuardServer extends Activity {
     String regID;
     String PROJECT_NUMBER = "492813484993";;
     GoogleCloudMessaging gcm;
+
+    //display values
+    public static String lat;
+    public static String lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +155,7 @@ public class TransGuardServer extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
     public void getRegId(){
         new AsyncTask<Void, Void, String>() {
             @Override
@@ -171,5 +181,37 @@ public class TransGuardServer extends Activity {
                 Log.i("Post execute: ", msg);
             }
         }.execute(null, null, null);
+    }
+
+    //Broadcast logic in order to get Intent values from GCM
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Register mMessageReceiver to receive messages.
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter("trans"));
+    }
+
+    // handler for received Intents for the "my-event" event
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Extract data included in the Intent
+
+            if (intent.getStringExtra("method").equals("updateRegID")) {
+
+            }
+            else if (intent.getStringExtra("method").equals("updateLocation")) {
+
+            }
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        // Unregister since the activity is not visible
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        super.onPause();
     }
 }
