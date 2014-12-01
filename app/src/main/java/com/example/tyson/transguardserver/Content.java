@@ -20,12 +20,11 @@ public class Content implements Serializable {
 
     // Instantiate the parser
     XMLParser xmlParser = new XMLParser();
-    //InputStream inputStream = null;
+
     List<XMLParser.Entry> entries = null;
     AssetManager am;
     InputStream is;
     int xmlCounter = 1;
-    Context context;
 
 
     public void addRegId(String regId){
@@ -41,7 +40,6 @@ public class Content implements Serializable {
         try {
             am = context.getAssets();
             is = am.open("xmlTestFile.xml");
-            //is = new FileInputStream("C:/Users/Tyson/Desktop/xmlTestFile.xml");
             entries = xmlParser.parse(is);
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,28 +73,10 @@ public class Content implements Serializable {
             stringAmount = '$' + String.valueOf(newAmount);
 
             data.put("amount" + String.valueOf(xmlCounter), stringAmount);
+            data.put("transactionSize", String.valueOf(entries.size()));
 
             xmlCounter++;
         }
 
-        //data.put("title", title);
-        //data.put("message", message);
-    }
-
-
-    public List<String> getRegistration_ids() {
-        return registration_ids;
-    }
-
-    public void setRegistration_ids(List<String> registration_ids) {
-        this.registration_ids = registration_ids;
-    }
-
-    public Map<String, String> getData() {
-        return data;
-    }
-
-    public void setData(Map<String, String> data) {
-        this.data = data;
     }
 }

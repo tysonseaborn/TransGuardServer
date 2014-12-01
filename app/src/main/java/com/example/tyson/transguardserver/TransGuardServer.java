@@ -30,7 +30,6 @@ public class TransGuardServer extends Activity {
     String regID;
     String PROJECT_NUMBER = "492813484993";;
     GoogleCloudMessaging gcm;
-    static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +110,6 @@ public class TransGuardServer extends Activity {
 
         switch(view.getId()) {
             case R.id.postButton:
-                //Bundle extras = getIntent().getExtras();
-                //clientRegID = extras.getString("regid");
                 Content content = createContent();
 
                 this.post(apiKey, content);
@@ -171,8 +168,7 @@ public class TransGuardServer extends Activity {
 
             @Override
             protected void onPostExecute(String msg) {
-                //etRegId.setText(msg + "\n");
-                Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG);
+                Log.i("Post execute: ", msg);
             }
         }.execute(null, null, null);
     }

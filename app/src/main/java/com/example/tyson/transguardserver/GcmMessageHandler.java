@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 public class GcmMessageHandler extends IntentService {
 
-    String mes;
     private Handler handler;
     public GcmMessageHandler() {
         super("GcmMessageHandler");
@@ -31,32 +30,14 @@ public class GcmMessageHandler extends IntentService {
         // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
 
-        //mes = extras.getString("title");
-        showToast();
-        //Log.i("GCM", "Received : (" +messageType+")  " + extras.getString("title"));
-
         if(extras.getString("regId") != null) {
             Toast.makeText(getBaseContext(), "Received : " + extras.getString("regId"), Toast.LENGTH_LONG).show();
             TransGuardServer.clientRegID = extras.getString("regId");
         } else if(extras.getString("lat") != null && extras.getString("lon") != null) {
             Log.i("GCM", "Received : (" + messageType +")  " + extras.getString("lat") + " " + extras.getString("lon"));
+            Toast.makeText(getBaseContext(), "Received location: " + extras.getString("lat") + " " + extras.getString("lon"), Toast.LENGTH_LONG).show();
         }
 
-//        Intent i = new Intent(getBaseContext(), TransGuardServer.class);
-//        i.putExtra("regId", extras.getString("regId"));
-//        startActivity(i);
-
-
-
         GcmBroadcastReceiver.completeWakefulIntent(intent);
-
-    }
-
-    public void showToast(){
-        handler.post(new Runnable() {
-            public void run() {
-                Toast.makeText(getApplicationContext(),mes , Toast.LENGTH_LONG).show();
-            }
-        });
     }
 }
