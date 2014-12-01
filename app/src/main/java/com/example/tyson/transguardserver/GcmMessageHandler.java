@@ -5,6 +5,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -33,9 +34,15 @@ public class GcmMessageHandler extends IntentService {
         if(extras.getString("regId") != null) {
             Toast.makeText(getBaseContext(), "Received : " + extras.getString("regId"), Toast.LENGTH_LONG).show();
             TransGuardServer.clientRegID = extras.getString("regId");
+            Intent i = new Intent("trans");
+            i.putExtra("method", "updateRegID");
+            LocalBroadcastManager.getInstance(this).sendBroadcast(i);
         } else if(extras.getString("lat") != null && extras.getString("lon") != null) {
             Log.i("GCM", "Received : (" + messageType +")  " + extras.getString("lat") + " " + extras.getString("lon"));
             Toast.makeText(getBaseContext(), "Received location: " + extras.getString("lat") + " " + extras.getString("lon"), Toast.LENGTH_LONG).show();
+            Intent i = new Intent("loc");
+            i.putExtra("method", "updateLocation");
+            LocalBroadcastManager.getInstance(this).sendBroadcast(i);
         }
 
         GcmBroadcastReceiver.completeWakefulIntent(intent);
