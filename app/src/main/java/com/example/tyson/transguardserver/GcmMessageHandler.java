@@ -40,6 +40,8 @@ public class GcmMessageHandler extends IntentService {
         } else if(extras.getString("lat") != null && extras.getString("lon") != null) {
             Log.i("GCM", "Received : (" + messageType +")  " + extras.getString("lat") + " " + extras.getString("lon"));
             Toast.makeText(getBaseContext(), "Received location: " + extras.getString("lat") + " " + extras.getString("lon"), Toast.LENGTH_LONG).show();
+            TransGuardServer.lat = extras.getString("lat");
+            TransGuardServer.lon = extras.getString("lon");
             Intent i = new Intent("loc");
             i.putExtra("method", "updateLocation");
             LocalBroadcastManager.getInstance(this).sendBroadcast(i);
